@@ -6,7 +6,7 @@ const questions = [
         "op2": "Hypertext Programming",
         "op3": "Personal Home Page",
         "op4": "Programming Hypertext Processor",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -16,7 +16,7 @@ const questions = [
         "op2": "Python",
         "op3": "Java",
         "op4": "C++",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -26,7 +26,7 @@ const questions = [
         "op2": "Hyper Textual Markup Language",
         "op3": "High Text Markup Language",
         "op4": "Hyperlink Text Markup Language",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -36,7 +36,7 @@ const questions = [
         "op2": "HTML",
         "op3": "Ruby",
         "op4": "C++",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -46,7 +46,7 @@ const questions = [
         "op2": "Berlin",
         "op3": "Madrid",
         "op4": "Paris",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -56,7 +56,7 @@ const questions = [
         "op2": "Angular",
         "op3": "Bootstrap",
         "op4": "Node.js",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -66,7 +66,7 @@ const questions = [
         "op2": "Bill Gates",
         "op3": "Elon Musk",
         "op4": "Mark Zuckerberg",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -76,7 +76,7 @@ const questions = [
         "op2": "2000",
         "op3": "2005",
         "op4": "2010",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -86,7 +86,7 @@ const questions = [
         "op2": "O2",
         "op3": "H2O",
         "op4": "HO",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     },
     {
@@ -96,7 +96,7 @@ const questions = [
         "op2": "Mars",
         "op3": "Jupiter",
         "op4": "Saturn",
-        "state": "unanswered",
+        "state": null,
         "selectedans": null
     }
 ];
@@ -108,14 +108,14 @@ function loadquestions(i){
     // alert(i)
     // console.log(questions[i])
 // questions.forEach(element => {
-    html += "<div class='card quest-card'>"
+    html += "<div class='card quest-card' data-questid='"+questions[i].id+"'>"
    
     html += "<div class='card-body'>"
     html += "<p class='card-title'>"+questions[i].quest+"</p>"
-    html += "<div class='form-check'><input data-questid='"+questions[i].id+"' value='"+questions[i].op1+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op1+ "</label></div>"
-    html += "<div class='form-check'><input data-questid='"+questions[i].id+"' value='"+questions[i].op2+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op2+ "</label></div>"
-    html += "<div class='form-check'><input data-questid='"+questions[i].id+"' value='"+questions[i].op3+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op3+ "</label></div>"
-    html += "<div class='form-check'><input data-questid='"+questions[i].id+"' value='"+questions[i].op4+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op4+ "</label></div>"
+    html += "<div class='form-check'><input "+( questions[i].selectedans && questions[i].selectedans == questions[i].op1 ? 'checked' : '' )+" data-questid='"+questions[i].id+"' value='"+questions[i].op1+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op1+ "</label></div>"
+    html += "<div class='form-check'><input "+( questions[i].selectedans && questions[i].selectedans == questions[i].op2 ? 'checked' : '' )+" data-questid='"+questions[i].id+"' value='"+questions[i].op2+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op2+ "</label></div>"
+    html += "<div class='form-check'><input "+( questions[i].selectedans && questions[i].selectedans == questions[i].op3 ? 'checked' : '' )+" data-questid='"+questions[i].id+"' value='"+questions[i].op3+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op3+ "</label></div>"
+    html += "<div class='form-check'><input "+( questions[i].selectedans && questions[i].selectedans == questions[i].op4 ? 'checked' : '' )+" data-questid='"+questions[i].id+"' value='"+questions[i].op4+"' type='radio' class='form-check-input radioopt'><label>" +questions[i].op4+ "</label></div>"
     html += "</div></div>"
 // });
 document.querySelector("#container").innerHTML = html;
@@ -127,29 +127,71 @@ else{
 }
 if(i != questions.length - 1){
     document.querySelector("#next").style.display = "inline-block";   
+    document.querySelector("#marknext").style.display = "inline-block";
+    document.querySelector("#savenext").style.display = "inline-block";
 }
 else{
     document.querySelector("#next").style.display = "none";
+    document.querySelector("#marknext").style.display = "none";
+    document.querySelector("#savenext").style.display = "none";
+    
+    
 }
+
+i == questions.length - 1 ? document.querySelector("#submittest").style.display = "inline-block" : document.querySelector("#submittest").style.display = "none";
+// load markers
+var markers = '';
+var quesindex = 0
+markers += "<div class='row'>"
+questions.forEach(element => {
+markers += "<div class='col-md-2 mb-2'>"
+markers += "<div data-questindex='"+quesindex+"' "+( element.state && element.state == 'answered' ? 'style="background-color:green"': '' )+" "+(element.state && element.state == 'unanswered' ? 'style="background-color:red"': '' )+" "+(element.state && element.state == 'markedreview' ? 'style="background-color:purple"': '' )+" class='border text-center p-2 navquestions'>"+element.id+"</div>"
+markers += "</div>"
+quesindex++;
+});
+markers += "</div>"
+document.querySelector("#markers").innerHTML = markers;
+
+
+var navqustions = document.querySelectorAll(".navquestions");
+navqustions.forEach(function(element){
+    
+    element.addEventListener("click", function(){
+       var questionindex = this.getAttribute("data-questindex");
+       console.log(questionindex)
+       loadquestions(questionindex);
+    })
+})
 }
 var noquest = 0;
 loadquestions(noquest)
 
-
+// Next questions
 document.querySelector("#next").addEventListener("click", function(){
     // alert("dd")
+    var questid = document.querySelector(".quest-card").getAttribute("data-questid");
+    // console.log(questid);
+    const questionsidindex = questions.findIndex(question => question.id == parseInt(questid));
+    console.log(questions[questionsidindex].state);
+    
+    questions[questionsidindex].state == null ?  questions[questionsidindex].state = "unanswered" : ''; 
+    // questions[questionsidindex].state == "markedreview" ?  "" : '';
     noquest = noquest + 1;
     // console.log(noquest)
     loadquestions(noquest);
 })
-
+// previos questions
 document.querySelector("#previous").addEventListener("click", function(){
     // alert("dd")
+    var questid = document.querySelector(".quest-card").getAttribute("data-questid");
+    console.log(questid);
+    const questionsidindex = questions.findIndex(question => question.id == parseInt(questid));
+    questions[questionsidindex].state == null ?  questions[questionsidindex].state = "unanswered" : ''; 
     noquest = noquest - 1;
     // console.log(noquest)
     loadquestions(noquest);
 })
-
+// Save qustion and next
 document.querySelector("#savenext").addEventListener("click", function(){
     // alert("he")
     var checkedValue ='';
@@ -160,14 +202,38 @@ document.querySelector("#savenext").addEventListener("click", function(){
                 checkedValue  = element.value;
                 questid = element.getAttribute("data-questid");
             }
+          
     })
-
+    if(checkedValue === ''){
+        alert("please select at least one value");
+        return false;
+       
+    }
     const questionsidindex = questions.findIndex(question => question.id == parseInt(questid));
     // console.log(questionsid);
     questions[questionsidindex].selectedans = checkedValue;
+    questions[questionsidindex].state = "answered"; 
     console.log(questions);
     // console.log(questid);
+    noquest = noquest + 1;
+    // console.log(noquest)
+    loadquestions(noquest);
 
 })
+
+document.querySelector("#marknext").addEventListener("click", function(){
+    var questid = document.querySelector(".quest-card").getAttribute("data-questid");
+    console.log(questid);
+    const questionsidindex = questions.findIndex(question => question.id == parseInt(questid));
+    questions[questionsidindex].state = "markedreview"; 
+    noquest = noquest + 1;
+    // console.log(noquest)
+    loadquestions(noquest);
+    console.log(questions);
+})
+
+// Navigation question load
+
+
 
 // console.log(questions); // Check the structure of the questions object
