@@ -17,7 +17,7 @@ const questions = [
         "op2": "Python",
         "op3": "Java",
         "op4": "C++",
-        "answer": "op2",
+        "answer": "op1",
         "state": null,
         "selectedans": null
     },
@@ -28,7 +28,7 @@ const questions = [
         "op2": "Hyper Textual Markup Language",
         "op3": "High Text Markup Language",
         "op4": "Hyperlink Text Markup Language",
-        "answer": "op3",
+        "answer": "op1",
         "state": null,
         "selectedans": null
     },
@@ -115,11 +115,12 @@ const questions = [
 
 function loadquestions(i) {
     var html = "";
-    // alert(i)
+    
     // console.log(questions[i])
     // questions.forEach(element => {
 
     if (i >= questions.length) {
+        // alert(i - 1);
         var markers = '';
         var quesindex = 0
         markers += "<div class='row'>"
@@ -130,7 +131,8 @@ function loadquestions(i) {
             quesindex++;
         });
         markers += "</div>"
-        document.querySelector("#markers").innerHTML = markers;
+        document.querySelector("#markers").innerHTML = markers; 
+        
         return false;
     }
 
@@ -159,7 +161,7 @@ function loadquestions(i) {
     }
     else {
         document.querySelector("#next").style.display = "none";
-        document.querySelector("#marknext").style.display = "none";
+        // document.querySelector("#marknext").style.display = "none";
         // document.querySelector("#savenext").innerHTML = "Save";
 
 
@@ -245,8 +247,10 @@ document.querySelector("#savenext").addEventListener("click", function () {
     questions[questionsidindex].state = "answered";
     console.log(questions);
     // console.log(questid);
+    if(noquest < questions.length - 1){
     noquest = noquest + 1;
-
+    }
+    // alert(noquest)
     // console.log(noquest)
     loadquestions(noquest);
 
@@ -282,6 +286,7 @@ document.querySelector("#submittest").addEventListener("click", function () {
 
 function calculateMarks() {
     var marks = 0;
+    console.log(questions)
     questions.forEach(element => {
         if (element.answer === element.selectedans) {
             marks++;
