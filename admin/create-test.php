@@ -12,6 +12,7 @@ include('header.php');
                     Basic form layout
                   </p> -->
                   <form class="forms-sample" id="testform">
+                   
                     <div class="form-group">
                       <label>Title of test</label>
                       <input type="text" name="title" class="form-control" placeholder="Title">
@@ -69,7 +70,13 @@ include('footer.php');
         xhr.onreadystatechange = function (){
             if(xhr.readyState === XMLHttpRequest.DONE){
                 if(xhr.status === 200){
-                    console.log("form submitted");
+                  // console.log(xhr.response);
+                 var resp = JSON.parse(xhr.response);
+                //  console.log(resp.status);
+                    if(resp.status === 'Record Inserted'){
+                          location.href= "edit-test.php?id="+resp.lastid;
+                    }
+                    
                 }
                 else{
                     console.log("Error")

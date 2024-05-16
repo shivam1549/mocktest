@@ -18,7 +18,14 @@ if($stmt->execute()){
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param("sd", $title, $duration);
         if($stmt->execute()){
-            echo "Record Inserted";
+            $last_id = $mysqli->insert_id;
+            // echo "Record Inserted";
+            $msg = [
+                'status' => "Record Inserted",
+                'lastid' => $last_id,
+            ];
+            // print_r($msg);
+            echo json_encode($msg, true);
         }
         else{
             echo "Error inserting record: " . $stmt->error;
