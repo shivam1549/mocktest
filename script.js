@@ -1,121 +1,132 @@
-const questions = [
-    {
-        "id": 1,
-        "quest": "What is the full form of PHP?",
-        "op1": "Hypertext Preprocessor",
-        "op2": "Hypertext Programming",
-        "op3": "Personal Home Page",
-        "op4": "Programming Hypertext Processor",
-        "answer": "op1",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 2,
-        "quest": "Which programming language is used for front-end web development?",
-        "op1": "JavaScript",
-        "op2": "Python",
-        "op3": "Java",
-        "op4": "C++",
-        "answer": "op1",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 3,
-        "quest": "What does HTML stand for?",
-        "op1": "Hypertext Markup Language",
-        "op2": "Hyper Textual Markup Language",
-        "op3": "High Text Markup Language",
-        "op4": "Hyperlink Text Markup Language",
-        "answer": "op1",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 4,
-        "quest": "Which of the following is NOT a programming language?",
-        "op1": "Java",
-        "op2": "HTML",
-        "op3": "Ruby",
-        "op4": "C++",
-        "answer": "op2",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 5,
-        "quest": "What is the capital of France?",
-        "op1": "London",
-        "op2": "Berlin",
-        "op3": "Madrid",
-        "op4": "Paris",
-        "answer": "op4",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 6,
-        "quest": "Which of the following is a CSS framework?",
-        "op1": "React",
-        "op2": "Angular",
-        "op3": "Bootstrap",
-        "op4": "Node.js",
-        "answer": "op3",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 7,
-        "quest": "Who is the CEO of Tesla?",
-        "op1": "Jeff Bezos",
-        "op2": "Bill Gates",
-        "op3": "Elon Musk",
-        "op4": "Mark Zuckerberg",
-        "answer": "op3",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 8,
-        "quest": "What year was JavaScript created?",
-        "op1": "1995",
-        "op2": "2000",
-        "op3": "2005",
-        "op4": "2010",
-        "answer": "op1",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 9,
-        "quest": "What is the chemical symbol for water?",
-        "op1": "H",
-        "op2": "O2",
-        "op3": "H2O",
-        "op4": "HO",
-        "answer": "op3",
-        "state": null,
-        "selectedans": null
-    },
-    {
-        "id": 10,
-        "quest": "Which planet is known as the Red Planet?",
-        "op1": "Earth",
-        "op2": "Mars",
-        "op3": "Jupiter",
-        "op4": "Saturn",
-        "answer": "op2",
-        "state": null,
-        "selectedans": null
-    }
-];
+// const questions = [
+//     {
+//         "id": 1,
+//         "quest": "What is the full form of PHP?",
+//         "op1": "Hypertext Preprocessor",
+//         "op2": "Hypertext Programming",
+//         "op3": "Personal Home Page",
+//         "op4": "Programming Hypertext Processor",
+//         "answer": "op1",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 2,
+//         "quest": "Which programming language is used for front-end web development?",
+//         "op1": "JavaScript",
+//         "op2": "Python",
+//         "op3": "Java",
+//         "op4": "C++",
+//         "answer": "op1",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 3,
+//         "quest": "What does HTML stand for?",
+//         "op1": "Hypertext Markup Language",
+//         "op2": "Hyper Textual Markup Language",
+//         "op3": "High Text Markup Language",
+//         "op4": "Hyperlink Text Markup Language",
+//         "answer": "op1",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 4,
+//         "quest": "Which of the following is NOT a programming language?",
+//         "op1": "Java",
+//         "op2": "HTML",
+//         "op3": "Ruby",
+//         "op4": "C++",
+//         "answer": "op2",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 5,
+//         "quest": "What is the capital of France?",
+//         "op1": "London",
+//         "op2": "Berlin",
+//         "op3": "Madrid",
+//         "op4": "Paris",
+//         "answer": "op4",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 6,
+//         "quest": "Which of the following is a CSS framework?",
+//         "op1": "React",
+//         "op2": "Angular",
+//         "op3": "Bootstrap",
+//         "op4": "Node.js",
+//         "answer": "op3",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 7,
+//         "quest": "Who is the CEO of Tesla?",
+//         "op1": "Jeff Bezos",
+//         "op2": "Bill Gates",
+//         "op3": "Elon Musk",
+//         "op4": "Mark Zuckerberg",
+//         "answer": "op3",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 8,
+//         "quest": "What year was JavaScript created?",
+//         "op1": "1995",
+//         "op2": "2000",
+//         "op3": "2005",
+//         "op4": "2010",
+//         "answer": "op1",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 9,
+//         "quest": "What is the chemical symbol for water?",
+//         "op1": "H",
+//         "op2": "O2",
+//         "op3": "H2O",
+//         "op4": "HO",
+//         "answer": "op3",
+//         "state": null,
+//         "selectedans": null
+//     },
+//     {
+//         "id": 10,
+//         "quest": "Which planet is known as the Red Planet?",
+//         "op1": "Earth",
+//         "op2": "Mars",
+//         "op3": "Jupiter",
+//         "op4": "Saturn",
+//         "answer": "op2",
+//         "state": null,
+//         "selectedans": null
+//     }
+// ];
 
 // console.log(questions[0])
 
+
+
+// console.log(questions);
+// You can now use the 'questions' array here
+
+allQuestions()
+.then(res => {
+    const questions = res;
+
+
+
 function loadquestions(i) {
     var html = "";
-    
+
     // console.log(questions[i])
     // questions.forEach(element => {
 
@@ -131,8 +142,8 @@ function loadquestions(i) {
             quesindex++;
         });
         markers += "</div>"
-        document.querySelector("#markers").innerHTML = markers; 
-        
+        document.querySelector("#markers").innerHTML = markers;
+
         return false;
     }
 
@@ -172,7 +183,9 @@ function loadquestions(i) {
     var markers = '';
     var quesindex = 0
     markers += "<div class='row'>"
+    // console.log(questions);
     questions.forEach(element => {
+        console.log(element.id)
         markers += "<div class='col-md-2 mb-2'>"
         markers += "<div data-questindex='" + quesindex + "' " + (element.state && element.state == 'answered' ? 'style="background-color:green"' : '') + " " + (element.state && element.state == 'unanswered' ? 'style="background-color:red"' : '') + " " + (element.state && element.state == 'markedreview' ? 'style="background-color:purple"' : '') + " class='border text-center p-2 navquestions'>" + element.id + "</div>"
         markers += "</div>"
@@ -194,6 +207,25 @@ function loadquestions(i) {
             loadquestions(questionindex);
         })
     })
+// Save question in server
+    return new Promise((resolve, reject) => {
+      
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "codes/savequestion.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    
+                } else {
+                    reject("Error: " + xhr.status);
+                }
+            }
+        };
+        const questionsStr = encodeURIComponent(JSON.stringify(questions));
+        xhr.send("questions=" + questionsStr);
+    });
 }
 var noquest = 0;
 loadquestions(noquest)
@@ -247,8 +279,8 @@ document.querySelector("#savenext").addEventListener("click", function () {
     questions[questionsidindex].state = "answered";
     console.log(questions);
     // console.log(questid);
-    if(noquest < questions.length - 1){
-    noquest = noquest + 1;
+    if (noquest < questions.length - 1) {
+        noquest = noquest + 1;
     }
     // alert(noquest)
     // console.log(noquest)
@@ -294,6 +326,14 @@ function calculateMarks() {
     })
     return marks;
 }
+
+})
+.catch(err => {
+    console.error(err);
+});
+
+
+
 
 // Navigation question load
 

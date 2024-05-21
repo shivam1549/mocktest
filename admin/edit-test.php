@@ -137,7 +137,7 @@ include('header.php');
             <div class="modal-header">
 
                 <h6 class="modal-title fs-5" id="editquestmodal">Edit questions</h6>
-                <span class="text-success" id="sucessmsgquest"></span>
+                <span class="text-success" id="sucessmsgquestedit"></span>
 
             </div>
             <form id="updatequestion">
@@ -389,57 +389,57 @@ include('footer.php');
                                 var html = `
                                     <div class="form-group">
                                         <label for="exampleInputUsername1">Title</label>
-                                        <input type="text" value="${questionData.question}" class="form-control" name="question" id="question" placeholder="Question Title">
-                                        <span class="error-question text-danger"></span>
-                                        <input name="questionid" type="hidden" value="${questionData.id}">
+                                        <input type="text" value="${questionData.question}" class="form-control" name="question" id="questionedit" placeholder="Question Title">
+                                        <span class="erroredit-question text-danger"></span>
+                                        <input name="questionid" type="hidden" id="questionid" value="${questionData.id}">
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleInputUsername1">Option 1</label>
-                                                <textarea class="form-control" name="op1" id="op1" placeholder="Options">${questionData.op1}</textarea>
-                                                <span class="error-op1 text-danger"></span>
+                                                <textarea class="form-control" name="op1" id="editop1" placeholder="Options">${questionData.op1}</textarea>
+                                                <span class="erroredit-op1 text-danger"></span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputUsername1">Option 2</label>
-                                                <textarea class="form-control" name="op2" id="op2" placeholder="Options">${questionData.op2}</textarea>
-                                                <span class="error-op2 text-danger"></span>
+                                                <textarea class="form-control" name="op2" id="editop2" placeholder="Options">${questionData.op2}</textarea>
+                                                <span class="erroredit-op2 text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleInputUsername1">Option 3</label>
-                                                <textarea class="form-control" name="op3" id="op3" placeholder="Options">${questionData.op3}</textarea>
-                                                <span class="error-op3 text-danger"></span>
+                                                <textarea class="form-control" name="op3" id="editop3" placeholder="Options">${questionData.op3}</textarea>
+                                                <span class="erroredit-op3 text-danger"></span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputUsername1">Option 4</label>
-                                                <textarea class="form-control" name="op4" id="op4" placeholder="Options">${questionData.op4}</textarea>
-                                                <span class="error-op4 text-danger"></span>
+                                                <textarea class="form-control" name="op4" id="editop4" placeholder="Options">${questionData.op4}</textarea>
+                                                <span class="erroredit-op4 text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleSelectGender">Correct Answer</label>
-                                        <select class="form-control" name="rightanswer" id="rightanswer">
+                                        <select class="form-control" name="rightanswer" id="editrightanswer">
                                             <option value=""></option>
                                             <option value="op1" ${questionData.rightanswer === 'op1' ? 'selected' : ''}>option 1</option>
                                             <option value="op2" ${questionData.rightanswer === 'op2' ? 'selected' : ''}>option 2</option>
                                             <option value="op3" ${questionData.rightanswer === 'op3' ? 'selected' : ''}>option 3</option>
                                             <option value="op4" ${questionData.rightanswer === 'op4' ? 'selected' : ''}>option 4</option>
                                         </select>
-                                        <span class="error-answer text-danger"></span>
+                                        <span class="erroredit-answer text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleSelectGender">Marks</label>
-                                        <select class="form-control" name="marks" id="marks">
+                                        <select class="form-control" name="marks" id="editmarks">
                                             <option value=""></option>
                                             <option value="1" ${questionData.marks == 1 ? 'selected' : ''}>1</option>
                                             <option value="2" ${questionData.marks == 2 ? 'selected' : ''}>2</option>
                                             <option value="3" ${questionData.marks == 3 ? 'selected' : ''}>3</option>
                                             <option value="4" ${questionData.marks == 4 ? 'selected' : ''}>4</option>
                                         </select>
-                                        <span class="error-marks text-danger"></span>
+                                        <span class="erroredit-marks text-danger"></span>
                                     </div>
                                 `;
 
@@ -448,72 +448,122 @@ include('footer.php');
 
                                 document.querySelector("#updatequestion").addEventListener("submit", function(e) {
                                     e.preventDefault();
-                                    var question = document.getElementById("question").value;
-                                    var op1 = document.getElementById("op1").value;
-                                    var op2 = document.getElementById("op2").value;
-                                    var op3 = document.getElementById("op3").value;
-                                    var op4 = document.getElementById("op4").value;
-                                    var rightanswer = document.getElementById("rightanswer").value;
-                                    var marks = document.getElementById("marks").value;
-                                    console.log(question)
+                                    var question = document.getElementById("questionedit").value;
+                                    var op1 = document.getElementById("editop1").value;
+                                    var op2 = document.getElementById("editop2").value;
+                                    var op3 = document.getElementById("editop3").value;
+                                    var op4 = document.getElementById("editop4").value;
+                                    var rightanswer = document.getElementById("editrightanswer").value;
+                                    var marks = document.getElementById("editmarks").value;
+                                    var id = document.getElementById("questionid").value;
+                                    // console.log(question)
+
+                                    // var formdata = {
+                                    //     "question": question,
+                                    //     "op1": op1,
+                                    //     "op2": op2,
+                                    //     "op3": op3,
+                                    //     "op4": op4,
+                                    //     "rightanswer": rightanswer,
+                                    //     "marks": marks,
+                                    //     "id": id
+
+                                    // }
+
                                     var valid = false;
                                     if (question.length === 0) {
 
-                                        document.querySelector(".error-question").innerHTML = "Please fill the title";
+                                        document.querySelector(".erroredit-question").innerHTML = "Please fill the title";
                                     } else {
                                         valid = true;
-                                        document.querySelector(".error-question").innerHTML = "";
+                                        document.querySelector(".erroredit-question").innerHTML = "";
                                     }
 
                                     // Validate option 1
                                     if (op1.length === 0) {
                                         valid = false;
-                                        document.querySelector(".error-op1").innerHTML = "Please fill option 1";
+                                        document.querySelector(".erroredit-op1").innerHTML = "Please fill option 1";
                                     } else {
-                                        document.querySelector(".error-op1").innerHTML = "";
+                                        document.querySelector(".erroredit-op1").innerHTML = "";
                                     }
 
                                     // Validate option 2
                                     if (op2.length === 0) {
                                         valid = false;
-                                        document.querySelector(".error-op2").innerHTML = "Please fill option 2";
+                                        document.querySelector(".erroredit-op2").innerHTML = "Please fill option 2";
                                     } else {
-                                        document.querySelector(".error-op2").innerHTML = "";
+                                        document.querySelector(".erroredit-op2").innerHTML = "";
                                     }
 
                                     // Validate option 3
                                     if (op3.length === 0) {
                                         valid = false;
-                                        document.querySelector(".error-op3").innerHTML = "Please fill option 3";
+                                        document.querySelector(".erroredit-op3").innerHTML = "Please fill option 3";
                                     } else {
-                                        document.querySelector(".error-op3").innerHTML = "";
+                                        document.querySelector(".erroredit-op3").innerHTML = "";
                                     }
 
                                     // Validate option 4
                                     if (op4.length === 0) {
                                         valid = false;
-                                        document.querySelector(".error-op4").innerHTML = "Please fill option 4";
+                                        document.querySelector(".erroredit-op4").innerHTML = "Please fill option 4";
                                     } else {
-                                        document.querySelector(".error-op4").innerHTML = "";
+                                        document.querySelector(".erroredit-op4").innerHTML = "";
                                     }
 
                                     // Validate correct answer
                                     if (rightanswer.length === 0) {
                                         valid = false;
-                                        document.querySelector(".error-answer").innerHTML = "Please select the correct answer";
+                                        document.querySelector(".erroredit-answer").innerHTML = "Please select the correct answer";
                                     } else {
-                                        document.querySelector(".error-answer").innerHTML = "";
+                                        document.querySelector(".erroredit-answer").innerHTML = "";
                                     }
 
                                     // Validate correct answer
                                     if (marks.length === 0) {
                                         valid = false;
-                                        document.querySelector(".error-marks").innerHTML = "Please enter marks";
+                                        document.querySelector(".erroredit-marks").innerHTML = "Please enter marks";
                                     } else {
-                                        document.querySelector(".error-marks").innerHTML = "";
+                                        document.querySelector(".erroredit-marks").innerHTML = "";
                                     }
 
                                     if (valid) {
+                                        // var form = document.querySelector("#updatequestion");
+                                        // var formData = new FormData(form);
+                                        // console.log(formData)
+                                        var formdata = new FormData();
+                                        formdata.append("question", question);
+                                        formdata.append("op1", op1);
+                                        formdata.append("op2", op2);
+                                        formdata.append("op3", op3);
+                                        formdata.append("op4", op4);
+                                        formdata.append("rightanswer", rightanswer);
+                                        formdata.append("marks", marks);
+                                        formdata.append("id", id);
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "codes/update-question.php", true);
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                                if (xhr.status === 200) {
+                                                    // console.log(xhr.response);
+                                                    var resp = JSON.parse(xhr.response);
+                                                    //  console.log(resp.status);
+                                                    if (resp.success === 'Updated successfully') {
+                                                        document.querySelector("#sucessmsgquestedit").innerHTML = resp.success;
+                                                        // document.getElementById("savequestion").reset();
+                                                        allquestiosns();
+                                                    }
+
+                                                    if (resp.error) {
+                                                        document.querySelector("#sucessmsgquestedit").innerHTML = resp.error;
+                                                    }
+
+                                                } else {
+                                                    console.log("Error")
+                                                }
+                                            }
+                                        }
+                                        xhr.send(formdata);
 
                                     } else {
                                         console.log("Form is invalid!");
