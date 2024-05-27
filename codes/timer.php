@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $timer = $row['duration'];
+                    $testname = $row['name'];
                     if(!isset($_SESSION['timer'])){
                         $_SESSION['timer'] = time() + ($timer * 60);
                         $endTimestamp = time() + ($timer * 60);
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $remainingTimeFormatted = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
                     // echo "Remaining Time: " . $remainingTimeFormatted . "<br>";
-                    echo json_encode(['remainingTime' => $remainingTimeFormatted]);
+                    echo json_encode(['remainingTime' => $remainingTimeFormatted, 'testname' =>  $testname]);
                 }
             }
         }

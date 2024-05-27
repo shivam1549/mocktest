@@ -301,6 +301,30 @@ document.querySelector("#marknext").addEventListener("click", function () {
 
 
 document.querySelector("#submittest").addEventListener("click", function () {
+
+    var userConfirmed = confirm("Are you sure want to submit?");
+
+    if (userConfirmed) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "test-end.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var resp = JSON.parse(xhr.response);
+                    if (resp.message == 'Test details saved successfully') {
+                       location.href="my-profile.php";
+                    }
+                   
+                } else {
+                    location.href="/";
+                    console.error("Error: " + xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    }
+
     document.querySelector("#container").innerHTML = '';
     document.querySelector("#markers").innerHTML = '';
     document.querySelector("#questionconatiner").innerHTML = '';

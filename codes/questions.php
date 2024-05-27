@@ -5,11 +5,30 @@ require('../admin/db.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_SESSION['questions'])) {
         echo json_encode($_SESSION['questions']);
-    }
-    else{
-    $id = isset($_POST['id']) ? trim($_POST['id']) : '';
-    $sql = "SELECT id,testid,question,op1,op2,op3,op4,rightanswer,marks FROM questions WHERE testid = ?";
-    $stmt = $mysqli->prepare($sql);
+    } else {
+        $id = isset($_POST['id']) ? trim($_POST['id']) : '';
+
+        $testdetails = "SELECT * FROM `tests` WHERE id =? LIMIT 1";
+        $stmttest = $mysqli->prepare($testdetails);
+        if ($stmttest) {
+            $stmttest->bind_param("i", $id);
+            if ($stmttest->execute()) {
+                $result = $stmttest->get_result();
+
+                if ($result->num_rows == 1) {
+
+                    while ($row = $result->fetch_assoc()) {
+                        $_SESSION['testdata'] = [
+                            "test" => $row['name'],
+                            "duration" => $row['duration']
+                        ];
+                    }
+                }
+            }
+        }
+
+        $sql = "SELECT id,testid,question,op1,op2,op3,op4,rightanswer,marks FROM questions WHERE testid = ?";
+        $stmt = $mysqli->prepare($sql);
 
         if ($stmt) {
             $stmt->bind_param("i", $id);
@@ -29,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             "op3" => $row['op3'],
                             "op4" => $row['op4'],
                             "answer" => $row['rightanswer'],
-                          
+
                         ];
                     }
 
@@ -48,6 +67,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $mysqli->close();
     }
-
 }
-?>

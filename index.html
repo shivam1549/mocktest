@@ -119,9 +119,16 @@
 
             </div>
             <div class="col-md-3">
-                <div class="text-right">
-                    <a href="javascript:void(0)" class="btn btn-outline-info">Switch Full Screen</a>
+                <div class="d-flex align-items-center" style="justify-content: space-between;">
+                    <div class="useimg d-flex align-items-center"> <img src="assets/img/icons8-user-30.png"
+                            style="margin-right: 10px;" alt="">
+                        <div id="nameuser"></div>
+                    </div>
+                    <div class="text-right">
+                        <a href="javascript:void(0)" class="btn btn-outline-info">Switch Full Screen</a>
+                    </div>
                 </div>
+
 
             </div>
         </div>
@@ -163,8 +170,61 @@
     </div>
     <script>
 
-
+       
         // Acceprt terms
+
+        function showTimer() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const id = urlParams.get('id');
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "codes/timer.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const resp = JSON.parse(xhr.response);
+                        document.querySelector("#timer").innerHTML = resp.remainingTime;
+                        document.querySelector("#questionname").innerHTML = resp.testname;
+                        // console.log(resp.remainingTime)
+                        const timeParts = resp.remainingTime.split(':');
+                        const remainingSeconds = (+timeParts[0]) * 3600 + (+timeParts[1]) * 60 + (+timeParts[2]);
+
+                        if (remainingSeconds <= 0) {
+                            alert("Test has ended!")
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "test-end.php", true);
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState === XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        var resp = JSON.parse(xhr.response);
+                                        if (resp.message == 'Test details saved successfully') {
+                                            location.href = "my-profile.php";
+                                        }
+
+                                    } else {
+                                        location.href = "/";
+                                        console.error("Error: " + xhr.status);
+                                    }
+                                }
+                            };
+                            xhr.send();
+
+                        }
+                    }
+
+
+
+                    else {
+                        reject("Error: " + xhr.status);
+                    }
+
+                }
+            }
+
+            xhr.send("id=" + encodeURIComponent(id));
+        }
 
         const termsCheckbox = document.getElementById('accepterms');
         const rulesContainer = document.getElementById('rules');
@@ -196,9 +256,9 @@
                 let timerInterval;
                 localStorage.setItem('timerStarted', true);
                 timerInterval = setInterval(showTimer, 1000);
-                if (localStorage.getItem('timerStarted')) {
-                    timerInterval = setInterval(showTimer, 1000);
-                }
+                if (!timerInterval && localStorage.getItem('timerStarted')) {
+                timerInterval = setInterval(showTimer, 1000);
+            }
             } else {
                 alert('Please accept the terms to continue.');
             }
@@ -261,42 +321,34 @@
         //     }
         // });
 
-        function showTimer() {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            const id = urlParams.get('id');
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "codes/timer.php", true);
+       
+
+
+        checkloginStatus();
+        function checkloginStatus() {
+            // alert(testid);
+            // var testid = testid;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "codes/checklogin.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        const resp = JSON.parse(xhr.response);
-                        document.querySelector("#timer").innerHTML = resp.remainingTime;
-                        // console.log(resp.remainingTime)
-                        const timeParts = resp.remainingTime.split(':');
-                        const remainingSeconds = (+timeParts[0]) * 3600 + (+timeParts[1]) * 60 + (+timeParts[2]);
-
-                        if (remainingSeconds <= 0) {
-                            alert("Test has ended!")
-                            location.href = "test-end.php";
-
+                        var resp = JSON.parse(xhr.response);
+                        if (!resp.loggedIn) {
+                            location.href = "/"
                         }
+                        else {
+
+                            document.querySelector("#nameuser").innerHTML = resp.userdetails.name;
+                        }
+                    } else {
+                        console.error("Error: " + xhr.status);
                     }
-
-
-
-                    else {
-                        reject("Error: " + xhr.status);
-                    }
-
                 }
-            }
-
-            xhr.send("id=" + encodeURIComponent(id));
+            };
+            xhr.send();
         }
-
-
 
 
 
