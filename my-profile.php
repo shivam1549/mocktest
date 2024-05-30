@@ -63,6 +63,8 @@ include('footer.php');
                     } else {
 
                         document.querySelector("#nameuser").innerHTML = resp.userdetails.name;
+                        document.querySelector("#signin").innerHTML = resp.userdetails.name;
+                        
                     }
                 } else {
                     console.error("Error: " + xhr.status);

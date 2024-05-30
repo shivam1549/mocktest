@@ -144,6 +144,32 @@ include("footer.php");
     xhr.send();
 
   }
+  checkloginStatusname();
+  function checkloginStatusname() {
+        // alert(testid);
+        // var testid = testid;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "codes/checklogin.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var resp = JSON.parse(xhr.response);
+                    if (resp.loggedIn) {
+                      // document.querySelector("#nameuser").innerHTML = resp.userdetails.name;
+                        document.querySelector("#signin").innerHTML = resp.userdetails.name;
+                    } else {
+
+                        
+                        
+                    }
+                } else {
+                    console.error("Error: " + xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    }
 
   function checkloginStatus(testid) {
     // alert(testid);
