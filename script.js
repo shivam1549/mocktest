@@ -151,10 +151,10 @@ function loadquestions(i) {
 
     html += "<div class='card-body'>"
     html += "<p class='card-title'>(" + questions[i].id + ") " + questions[i].quest + "</p>"
-    html += "<div class='form-check'><input " + (questions[i].selectedans && questions[i].selectedans == 'op1' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op1' type='radio' class='form-check-input radioopt'><label>" + questions[i].op1 + "</label></div>"
-    html += "<div class='form-check'><input " + (questions[i].selectedans && questions[i].selectedans == 'op2' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op2' type='radio' class='form-check-input radioopt'><label>" + questions[i].op2 + "</label></div>"
-    html += "<div class='form-check'><input " + (questions[i].selectedans && questions[i].selectedans == 'op3' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op3' type='radio' class='form-check-input radioopt'><label>" + questions[i].op3 + "</label></div>"
-    html += "<div class='form-check'><input " + (questions[i].selectedans && questions[i].selectedans == 'op4' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op4' type='radio' class='form-check-input radioopt'><label>" + questions[i].op4 + "</label></div>"
+    html += "<div class='form-check'><input name='saveanswe' " + (questions[i].selectedans && questions[i].selectedans == 'op1' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op1' type='radio' class='form-check-input radioopt'><label>" + questions[i].op1 + "</label></div>"
+    html += "<div class='form-check'><input name='saveanswe' " + (questions[i].selectedans && questions[i].selectedans == 'op2' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op2' type='radio' class='form-check-input radioopt'><label>" + questions[i].op2 + "</label></div>"
+    html += "<div class='form-check'><input name='saveanswe' " + (questions[i].selectedans && questions[i].selectedans == 'op3' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op3' type='radio' class='form-check-input radioopt'><label>" + questions[i].op3 + "</label></div>"
+    html += "<div class='form-check'><input name='saveanswe' " + (questions[i].selectedans && questions[i].selectedans == 'op4' ? 'checked' : '') + " data-questid='" + questions[i].id + "' value='op4' type='radio' class='form-check-input radioopt'><label>" + questions[i].op4 + "</label></div>"
     html += "</div></div>"
 
     // });
@@ -230,6 +230,71 @@ function loadquestions(i) {
 var noquest = 0;
 loadquestions(noquest)
 
+// Clear Question
+
+document.querySelector("#clear").addEventListener("click", function () {
+
+    var checkedValue = '';
+    document.querySelectorAll(".radioopt").forEach(element => {
+        // console.log(element.value)
+        if (element.checked) {
+            checkedValue = element.value;
+            questid = element.getAttribute("data-questid");
+        }
+
+    })
+    if (checkedValue === '') {
+        alert("please select at least one value");
+        return false;
+
+    }
+
+    var questid = document.querySelector(".quest-card").getAttribute("data-questid");
+    const questionsidindex = questions.findIndex(question => question.id == parseInt(questid));
+    questions[questionsidindex].state = "unanswered";
+    questions[questionsidindex].selectedans = null
+
+    let radios = document.getElementsByName('saveanswe');
+    for (let i = 0; i < radios.length; i++) {
+        radios[i].checked = false;
+    }
+
+     // load markers
+     var markers = '';
+     var quesindex = 0
+     markers += "<div class='row'>"
+     // console.log(questions);
+     questions.forEach(element => {
+         console.log(element.id)
+         markers += "<div class='col-md-2 mb-2'>"
+         markers += "<div data-questindex='" + quesindex + "' " + (element.state && element.state == 'answered' ? 'style="background-color:green"' : '') + " " + (element.state && element.state == 'unanswered' ? 'style="background-color:red"' : '') + " " + (element.state && element.state == 'markedreview' ? 'style="background-color:purple"' : '') + " class='border text-center p-2 navquestions'>" + element.id + "</div>"
+         markers += "</div>"
+         quesindex++;
+     });
+     markers += "</div>"
+     document.querySelector("#markers").innerHTML = markers;
+
+    return new Promise((resolve, reject) => {
+      
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "codes/savequestion.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    
+                } else {
+                    reject("Error: " + xhr.status);
+                }
+            }
+        };
+        const questionsStr = encodeURIComponent(JSON.stringify(questions));
+        xhr.send("questions=" + questionsStr);
+    });
+
+})
+
 // Next questions
 document.querySelector("#next").addEventListener("click", function () {
     // alert("dd")
@@ -301,6 +366,7 @@ document.querySelector("#marknext").addEventListener("click", function () {
 
 
 document.querySelector("#submittest").addEventListener("click", function () {
+    localStorage.clear();
 
     var userConfirmed = confirm("Are you sure want to submit?");
 

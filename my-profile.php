@@ -10,9 +10,10 @@ include('header.php');
             <h5>Hi! <span id="nameuser"></span></h5>
             <!-- <p><strong>Email:</strong> john.doe@example.com</p> -->
         </div>
-        <!-- <div class="col-md-6 text-right">
-                <button class="btn btn-danger">Logout</button>
-            </div> -->
+        <div class="col-md-6" style="text-align: right;">
+                <!-- <button class="btn btn-danger">Logout</button> -->
+                <a href="/mocktest" class="btn btn-outline-dark">Go Back To Test</a>
+            </div>
     </div>
 
     <!-- Attempted Tests Table -->
@@ -30,6 +31,7 @@ include('header.php');
                     <th scope="col">Total Marks</th>
                     <th scope="col">Questions Attempted</th>
                     <th scope="col">Total Questions</th>
+                    <th scope="col">Date</th>
                 </tr>
             </thead>
             <tbody id="attemptedquestion">
@@ -94,6 +96,7 @@ include('footer.php');
                             <td>${quesdata.total}</td>
                             <td>${quesdata.attempted}</td>
                             <td>${quesdata.total}</td>
+                            <td>${quesdata.date}</td>
                         </tr>`
                     })
                     document.querySelector("#attemptedquestion").innerHTML = html;

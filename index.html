@@ -222,7 +222,7 @@
                         <div id="nameuser"></div>
                     </div>
                     <div class="text-right">
-                        <a href="javascript:void(0)" class="btn btn-outline-info">Switch Full Screen</a>
+                        <a href="javascript:void(0)" id="switchfullscreen" class="btn btn-outline-info">Switch Full Screen</a>
                     </div>
                 </div>
 
@@ -244,6 +244,7 @@
                     <div>
                         <button id="previous" class="btn btn-info">Previous</button>
                         <button id="next" class="btn btn-info">Next</button>
+                        <button id="clear" class="btn btn-outline-dark">Clear</button>
                     </div>
                     <div>
                         <button id="marknext" class="btn btn-dark">Mark for review & next</button>
@@ -269,6 +270,7 @@
 
 
         // Acceprt terms
+        checkTermsaccepted();
 
         function showTimer() {
             const queryString = window.location.search;
@@ -356,7 +358,78 @@
         //     // alert("ffdfdfdjjkd")
         // }
 
-        console.log(localStorage.getItem("checkedaccept"))
+        // console.log(localStorage.getItem("checkedaccept"))
+        
+        function checkTermsaccepted(){
+            // alert("hey")
+            const rulesContainer = document.getElementById('rules');
+            const testContainer = document.getElementById('mycontainertest');
+            if(localStorage.getItem("checkedaccept")){
+                // alert("tes")
+                rulesContainer.style.display = 'none';
+                testContainer.style.display = 'block';
+                let timerInterval;
+                localStorage.setItem('timerStarted', true);
+                timerInterval = setInterval(showTimer, 1000);
+                if (!timerInterval && localStorage.getItem('timerStarted')) {
+                    timerInterval = setInterval(showTimer, 1000);
+                }
+            }
+            else{
+                rulesContainer.style.display = 'block';
+                testContainer.style.display = 'none';
+            }
+
+        }
+
+        document.querySelector("#switchfullscreen").addEventListener("click", function() {
+    let elem = document.documentElement;
+
+    if (!document.fullscreenElement &&    // standard method
+        !document.mozFullScreenElement && // Firefox
+        !document.webkitFullscreenElement && // Chrome, Safari, Opera
+        !document.msFullscreenElement) {  // IE/Edge
+
+        // Enter fullscreen mode
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else if (elem.mozRequestFullScreen) { // Firefox
+            elem.mozRequestFullScreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            elem.webkitRequestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else if (elem.msRequestFullscreen) { // IE/Edge
+            elem.msRequestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        }
+    } else {
+        // Exit fullscreen mode
+        if (document.exitFullscreen) {
+            document.exitFullscreen().catch(err => {
+                console.error(`Error attempting to exit full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen().catch(err => {
+                console.error(`Error attempting to exit full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen().catch(err => {
+                console.error(`Error attempting to exit full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen().catch(err => {
+                console.error(`Error attempting to exit full-screen mode: ${err.message} (${err.name})`);
+            });
+        }
+    }
+});
+
 
         document.querySelector("#acceptbtn").addEventListener("click", function () {
 

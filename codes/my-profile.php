@@ -7,9 +7,10 @@ if (isset($_SESSION['userdetails'])) {
     $userid = $_SESSION['userdetails']['id'];
     $username = $_SESSION['userdetails']['name'];
 
-    $sql = "SELECT username, testdetails, testname FROM saved_questions";
+    $sql = "SELECT username, testdetails, testname, created_at FROM saved_questions WHERE userid = ? ORDER BY created_at DESC";
     $stmt = $mysqli->prepare($sql);
     if ($stmt) {
+        $stmt->bind_param("i", $userid);
         if ($stmt->execute()) {
             $result = $stmt->get_result();
             $data = [];
@@ -26,12 +27,14 @@ if (isset($_SESSION['userdetails'])) {
                             $attempted += 1;
                         }
                     }
+                    $date = new DateTime($row['created_at']);
                     $testname = json_decode($row['testname'], true);
                     $data[] = [
                         "testname" => $testname['test'],
                         "totmarks" => $marks,
                         "attempted" => $attempted,
-                        "total" => count($testdetail)
+                        "total" => count($testdetail),
+                        "date" => $date->format('d M Y'),
 
                     ];
                 }

@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($questions !== null) {
             // Save the data to the session
             $_SESSION['questions'] = $questions;
+            var_dump($_SESSION['questions']) ;
             echo json_encode(["status" => "success"]);
         } else {
             http_response_code(400);
