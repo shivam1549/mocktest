@@ -177,7 +177,7 @@ include('footer.php');
                     "<span class='text-danger title-error'></span>" +
                     "</div>" +
                     "<div class='form-group'>" +
-                    "<label>Duration in hours</label>" +
+                    "<label>Duration in Minutes</label>" +
                     "<input type='text' name='duration' value='" + resp.duration + "' class='form-control' placeholder='Duration'>" +
                     "<span class='text-danger duration-error'></span>" +
                     "</div>";

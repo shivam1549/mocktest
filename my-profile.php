@@ -1,5 +1,9 @@
 <?php
 include('header.php');
+session_start();
+unset($_SESSION['timer']);
+unset($_SESSION['testdata']);
+unset($_SESSION['questions']);
 ?>
 
 <div class="container  pt-60 pb-60">
@@ -11,9 +15,9 @@ include('header.php');
             <!-- <p><strong>Email:</strong> john.doe@example.com</p> -->
         </div>
         <div class="col-md-6" style="text-align: right;">
-                <!-- <button class="btn btn-danger">Logout</button> -->
-                <a href="/mocktest" class="btn btn-outline-dark">Go Back To Test</a>
-            </div>
+            <!-- <button class="btn btn-danger">Logout</button> -->
+            <a href="/mocktest" class="btn btn-outline-dark">Go Back To Test</a>
+        </div>
     </div>
 
     <!-- Attempted Tests Table -->
@@ -36,7 +40,7 @@ include('header.php');
             </thead>
             <tbody id="attemptedquestion">
                 <!-- Sample data row -->
-                
+
             </tbody>
         </table>
     </div>
@@ -51,6 +55,7 @@ include('footer.php');
     showattemptedtest();
 
     function checkloginStatus() {
+        localStorage.clear();
         // alert(testid);
         // var testid = testid;
         var xhr = new XMLHttpRequest();
@@ -61,12 +66,12 @@ include('footer.php');
                 if (xhr.status === 200) {
                     var resp = JSON.parse(xhr.response);
                     if (!resp.loggedIn) {
-                        location.href = "/"
+                        location.href = "/mocktest"
                     } else {
 
                         document.querySelector("#nameuser").innerHTML = resp.userdetails.name;
                         document.querySelector("#signin").innerHTML = resp.userdetails.name;
-                        
+
                     }
                 } else {
                     console.error("Error: " + xhr.status);
@@ -75,7 +80,7 @@ include('footer.php');
         };
         xhr.send();
     }
-    
+
     function showattemptedtest() {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "codes/my-profile.php", true);
@@ -85,11 +90,11 @@ include('footer.php');
                 if (xhr.status === 200) {
                     var resp = JSON.parse(xhr.response);
                     if (resp.data) {
-                       var questiondata = resp.data;
-                       
-                       var html =''
-                       questiondata.forEach(quesdata => {
-                       html += `<tr>
+                        var questiondata = resp.data;
+
+                        var html = ''
+                        questiondata.forEach(quesdata => {
+                            html += `<tr>
                             <td>${quesdata.testname}</td>
                             <td>${quesdata.totmarks}</td>
                          
@@ -98,11 +103,11 @@ include('footer.php');
                             <td>${quesdata.total}</td>
                             <td>${quesdata.date}</td>
                         </tr>`
-                    })
-                    document.querySelector("#attemptedquestion").innerHTML = html;
-                    } 
-                    if(resp.error){
-                    document.querySelector("#error").innerHTML = resp.error;
+                        })
+                        document.querySelector("#attemptedquestion").innerHTML = html;
+                    }
+                    if (resp.error) {
+                        document.querySelector("#error").innerHTML = resp.error;
                     }
                 } else {
                     console.error("Error: " + xhr.status);

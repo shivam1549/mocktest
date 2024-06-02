@@ -122,7 +122,7 @@ include("footer.php");
                                     <p>${test.name}</p>
                                     <p>Duration: ${test.duration} minutes </p>
                                     <div class="card-footers">
-                                  <a href="javascript:void(0)" data-testid="${test.id}" class="btn btn-info startest">Star Now</a>
+                                  <a href="javascript:void(0)" data-testid="${test.id}" class="btn btn-info startest">Start Now</a>
                                   </div>
                                   </div>
                                   

@@ -19,7 +19,7 @@ include('header.php');
                       <span class="text-danger title-error"></span>
                     </div>
                     <div class="form-group">
-                      <label>Duration in hours</label>
+                      <label>Duration in minutes</label>
                       <input type="text" name="duration" class="form-control"  placeholder="Duration">
                       <span class="text-danger duration-error"></span>
                       

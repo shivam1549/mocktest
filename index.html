@@ -283,6 +283,10 @@
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         const resp = JSON.parse(xhr.response);
+                        if(resp.error){
+                            alert(resp.error);
+                            location.href="my-profile.php";
+                        }
                         document.querySelector("#timer").innerHTML = resp.remainingTime;
                         document.querySelector("#questionname").innerHTML = resp.testname;
                         // console.log(resp.remainingTime)
@@ -292,6 +296,8 @@
                         if (remainingSeconds <= 0) {
                             endTest();
                         }
+                        
+                        
                     }
 
 
@@ -321,7 +327,7 @@
                         }
 
                     } else {
-                        location.href = "/";
+                        location.href = "/mocktest";
                         console.error("Error: " + xhr.status);
                     }
                 }
@@ -483,8 +489,11 @@
                         if (xhr.status === 200) {
                             try {
                                 const resp = JSON.parse(xhr.response);
-                                const questions = resp.map(val => ({
-                                    "id": val.id,
+                                var i = 0;
+                                const questions = resp.map(val => {
+                                    i++;
+                                    return {
+                                    "id": i,
                                     "quest": val.quest,
                                     "op1": val.op1,
                                     "op2": val.op2,
@@ -492,8 +501,11 @@
                                     "op4": val.op4,
                                     "answer": val.answer,
                                     "state": val.state ? val.state : null,
-                                    "selectedans": val.selectedans ? val.selectedans : null
-                                }));
+                                    "selectedans": val.selectedans ? val.selectedans : null,
+                                    };
+
+                                    
+                                });
 
                                 resolve(questions);
                             } catch (error) {
@@ -541,7 +553,7 @@
                     if (xhr.status === 200) {
                         var resp = JSON.parse(xhr.response);
                         if (!resp.loggedIn) {
-                            location.href = "/"
+                            location.href = "/mocktest"
                         }
                         else {
 

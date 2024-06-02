@@ -366,11 +366,12 @@ document.querySelector("#marknext").addEventListener("click", function () {
 
 
 document.querySelector("#submittest").addEventListener("click", function () {
-    localStorage.clear();
+   
 
     var userConfirmed = confirm("Are you sure want to submit?");
 
     if (userConfirmed) {
+        localStorage.clear();
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "test-end.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -391,17 +392,17 @@ document.querySelector("#submittest").addEventListener("click", function () {
         xhr.send();
     }
 
-    document.querySelector("#container").innerHTML = '';
-    document.querySelector("#markers").innerHTML = '';
-    document.querySelector("#questionconatiner").innerHTML = '';
+    // document.querySelector("#container").innerHTML = '';
+    // document.querySelector("#markers").innerHTML = '';
+    // document.querySelector("#questionconatiner").innerHTML = '';
 
 
-    const getmarks = calculateMarks();
-    const totalmarks = questions.length;
+    // const getmarks = calculateMarks();
+    // const totalmarks = questions.length;
 
-    var marks = "<h2 class='text-center'><span style='color:green'>" + getmarks + "</span>Out of" + totalmarks + "</h2>";
+    // var marks = "<h2 class='text-center'><span style='color:green'>" + getmarks + "</span>Out of" + totalmarks + "</h2>";
 
-    document.querySelector("#obtmarks").innerHTML = marks;
+    // document.querySelector("#obtmarks").innerHTML = marks;
 
 
 })
